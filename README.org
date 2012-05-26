@@ -1,0 +1,37 @@
+#+title: infix2prefix
+
+Package for converting an infix expression into a prefix one.
+Currently contains primitive utilities.  Consult the source code for
+documentation.  The unit tests give examples of use.
+
+* ~split-infix~
+
+  Parses a string and returns two lists
+  - One contains the terms
+  - The other the operators
+* ~parse-algebraic-expression~
+  
+  Accepts two argument lists, one containing the terms, and the other
+  the four basic algebraic operators.  It does not recognize nor
+  process parenthesis.
+
+  The function combines these the lists into a single list that
+  contains the expression parsed into prefix notation, obeying the
+  standard precedence rules.
+
+  The input lists contain symbols, and these lists may be
+  destructively modified.
+
+  A couple of examples from the unit tests:
+#+BEGIN_SRC lisp
+  (assert-equal '(- (+ (+ a b) c) d)
+		(parse-algebraic-expression (list 'a 'b 'c 'd) (list '+ '+ '-)))
+  (assert-equal '(- (+ a (* b c)) d)
+		(parse-algebraic-expression (list 'a 'b 'c 'd) (list '+ '* '-)))
+  (assert-equal '(- (+ a b) (* c d))
+		(parse-algebraic-expression (list 'a 'b 'c 'd) (list '+ '- '*)))
+#+END_SRC
+
+
+* ~*ops-bag*
+  A list of recognized operators
